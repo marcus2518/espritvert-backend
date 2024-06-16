@@ -1,11 +1,13 @@
 import express, { Request, Response, NextFunction } from "express";
 import userRoutes from "./routes/userRoutes";
 import errorHandler from "./middleware/errorHandler";
+import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
