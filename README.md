@@ -55,6 +55,27 @@ The EspritVert Backend is a back-end service for the EspritVert mobile applicati
     gcloud app deploy
     ```
 
+### The Essentials
+
+By default, the project runs locally on port 3000.
+
+```http://localhost:3000/```
+
+#### API Documentation
+Swagger documentation for the APIs is available at:
+
+```http://localhost:3000/api-docs```
+
+#### Minimal commands to run the project locally
+
+To correctly run the project locally:
+
+```sh
+npm install
+npm run build
+npm run dev
+```
+
 ### Scripts
 
 - **Linting**: `npm run lint` - Runs ESLint on the project.
