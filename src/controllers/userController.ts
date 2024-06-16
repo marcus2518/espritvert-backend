@@ -1,11 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { register, signIn } from "../services/authService";
 
-interface User {
-  name: string;
-  email: string;
-}
-
 export const registerUser = async (
   req: Request,
   res: Response,
