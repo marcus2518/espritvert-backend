@@ -66,6 +66,13 @@ Swagger documentation for the APIs is available at:
 
 ```http://localhost:3000/api-docs```
 
+##### Regenerating API Documentation
+While Nodemon will watch and update your local server every time you save your code, you need to re-build the application to update Swagger documentation if you modify it.
+
+```
+npm run build
+```
+
 #### Minimal commands to run the project locally
 
 To correctly run the project locally:
