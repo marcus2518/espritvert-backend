@@ -1,0 +1,49 @@
+{
+  "name": "espritvert-backend",
+  "version": "1.0.0",
+  "description": "Back-end for the EspritVert mobile application",
+  "main": "index.js",
+  "scripts": {
+    "lint": "npx eslint .",
+    "predev": "npm run lint",
+    "dev": "nodemon",
+    "prebuild": "npm run lint",
+    "build": "tsc",
+    "predeploy": "npm run lint",
+    "deploy": "firebase deploy --only functions:api",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcus2518/espritvert-backend.git"
+  },
+  "keywords": [
+    "firebase",
+    "nodejs",
+    "backend",
+    "espritvert"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@firebase/auth": "^1.7.4",
+    "express": "^4.19.2",
+    "firebase": "^10.12.2",
+    "firebase-admin": "^12.1.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.5.0",
+    "@firebase/auth": "^1.7.4",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.2",
+    "cors": "^2.8.5",
+    "eslint": "^9.5.0",
+    "globals": "^15.5.0",
+    "nodemon": "^3.1.3",
+    "prettier": "^3.3.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.13.0"
+  }
+}
