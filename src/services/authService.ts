@@ -3,6 +3,7 @@ import {
   signInWithEmailAndPassword,
 } from "@firebase/auth";
 import { auth } from "../config/firebaseConfig";
+import { db } from "../config/firebaseAdmin";
 
 const register = async (email: string, password: string) => {
   try {
@@ -15,6 +16,17 @@ const register = async (email: string, password: string) => {
     return user;
   } catch (error) {
     handleAuthError(error);
+  }
+};
+
+const getUserById = async (id: string) => {
+  console.log(id);
+  try {
+    const user = await db.collection("users").doc(id).get();
+    return user.data();
+  } catch (error) {
+    console.error(error);
+    throw new Error("Could not get user");
   }
 };
 
@@ -63,4 +75,4 @@ const handleAuthError = (error: any) => {
   }
 };
 
-export { register, signIn };
+export { register, signIn, getUserById };

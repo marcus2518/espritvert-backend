@@ -1,5 +1,9 @@
 import express from "express";
-import { registerUser, signInUser } from "../controllers/userController";
+import {
+  registerUser,
+  signInUser,
+  getUser,
+} from "../controllers/userController";
 
 const router = express.Router();
 
@@ -38,6 +42,31 @@ const router = express.Router();
  *         description: Internal server error
  */
 router.post("/register", registerUser);
+
+/**
+ * @swagger
+ * /api/users/{userId}:
+ *   get:
+ *     summary: Get user by ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User ID
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
+router.get("/users/:userId", getUser);
 
 /**
  * @swagger
