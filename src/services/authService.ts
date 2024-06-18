@@ -3,9 +3,8 @@ import {
   signInWithEmailAndPassword,
 } from "@firebase/auth";
 import { auth } from "../config/firebaseConfig";
-import { db } from "../config/firebaseAdmin";
 
-const register = async (email: string, password: string) => {
+export const register = async (email: string, password: string) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -19,18 +18,7 @@ const register = async (email: string, password: string) => {
   }
 };
 
-const getUserById = async (id: string) => {
-  console.log(id);
-  try {
-    const user = await db.collection("users").doc(id).get();
-    return user.data();
-  } catch (error) {
-    console.error(error);
-    throw new Error("Could not get user");
-  }
-};
-
-const signIn = async (email: string, password: string) => {
+export const signIn = async (email: string, password: string) => {
   try {
     const userCredential = await signInWithEmailAndPassword(
       auth,
@@ -74,5 +62,3 @@ const handleAuthError = (error: any) => {
       throw new Error("An unknown error occurred.");
   }
 };
-
-export { register, signIn, getUserById };

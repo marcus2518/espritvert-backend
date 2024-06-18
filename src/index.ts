@@ -1,9 +1,8 @@
 import express from "express";
-import userRoutes from "./routes/userRoutes";
+import apiRouter from "./routes/apiRoutes";
 import cors from "cors";
 import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import { getUser } from "./controllers/userController";
 
 // Swagger configuration
 const swaggerOptions = {
@@ -41,9 +40,8 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-app.get("/:id", getUser);
 
-app.use("/api", userRoutes);
+app.use("/api", apiRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
