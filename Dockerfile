@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
-COPY tsconfig.json
+COPY tsconfig.json ./
 
 # Install dependencies
 RUN npm install
