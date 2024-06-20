@@ -37,7 +37,7 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-console.log("Tes");
+console.log("Deploiement test");
 
 app.use(express.json());
 app.use(cors());
