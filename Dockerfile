@@ -11,9 +11,12 @@ COPY tsconfig.json ./
 # Install dependencies
 RUN npm install
 RUN npm install typescript -g
-RUN tsc
+
 # Copy the rest of the application code
 COPY . .
+RUN tsc
+
+
 
 # Expose the port the app runs on
 # Expose port 80
