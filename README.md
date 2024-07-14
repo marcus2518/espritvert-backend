@@ -109,6 +109,12 @@ espritvert-backend/
 │   ├── routes/            # Route definitions
 │   ├── services/          # Service layer
 │   └── index.ts           # Entry point of the application
+│ 
+│
+├── test/                  # Directory for unit tests
+│   ├── controllers/       # Test for the controllers
+│   ├── routes/            # Test for the routes
+│   └── services/          # Test for the services
 │
 ├── .firebaserc            # Firebase project configuration
 ├── .gcloudignore          # Files to ignore for Google Cloud
