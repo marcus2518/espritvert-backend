@@ -18,18 +18,11 @@ export const db_getUserById = async (id: string): Promise<UserDTO> => {
   return foundUser;
 };
 
-
-export const db_createUser = async (user: UserDTO) => {
+export const db_createUser = async (user: UserDTO): Promise<{ message: string; userId: string }> => {
   try {
-    const userRef = db.collection(collectionName).doc(user.id);
-    const userSnapshot = await userRef.get();
-
-    if (userSnapshot.exists) {
-      throw new HttpError(`[DATA] User with id ${user.id} already exists`, 400);
-    }
-
+    const userRef = db.collection(collectionName).doc();
     await userRef.set(user);
-    return { message: "User created successfully", userId: user.id };
+    return { message: "User created successfully", userId: userRef.id };
   } catch (error: any) {
     throw new HttpError(`[DATA] Error creating user: ${error.message}`, 500);
   }

@@ -48,40 +48,29 @@ router.get("/:userId", getUser);
  *           schema:
  *             type: object
  *             properties:
- *               id:
+ *               address:
  *                 type: string
- *               name:
+ *               city:
  *                 type: string
- *               email:
+ *               province:
  *                 type: string
- *               description:
+ *               postalCode:
  *                 type: string
- *               price:
+ *               prenom:
  *                 type: string
- *               location:
+ *               nom:
  *                 type: string
- *               startDate:
- *                 type: string
- *                 format: date-time
- *               endDate:
+ *               dateOfBirth:
  *                 type: string
  *                 format: date-time
- *               image:
- *                 type: string
- *                 nullable: true
- *               category:
- *                 type: integer
  *             example:
- *               id: "123"
- *               name: "John Doe"
- *               email: "john.doe@example.com"
- *               description: "A short bio"
- *               price: "100"
- *               location: "New York"
- *               startDate: "2024-08-05T00:00:00.000Z"
- *               endDate: "2024-08-06T00:00:00.000Z"
- *               image: null
- *               category: 1
+ *               address: "123 Main St"
+ *               city: "New York"
+ *               province: "NY"
+ *               postalCode: "10001"
+ *               prenom: "John"
+ *               nom: "Doe"
+ *               dateOfBirth: "1990-01-01T00:00:00.000Z"
  *     responses:
  *       201:
  *         description: User created successfully

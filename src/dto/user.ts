@@ -1,12 +1,11 @@
+// userDTO.ts
+
 export interface UserDTO {
-    id: string;
-    name: string;
-    email: string;
-    description: string;
-    price: string;
-    location: string;
-    startDate: Date | null;
-    endDate: Date | null;
-    image: string | null;
-    category: number;
+    address: string;
+    city: string;
+    province: string;
+    postalCode: string;
+    prenom: string;
+    nom: string;
+    dateOfBirth: Date | null;
 }
