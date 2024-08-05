@@ -1,0 +1,76 @@
+// src/controllers/postingController.ts
+
+import { Response } from "express";
+import { addPosting, getPosting, getPostings, updatePosting, deletePosting } from "../services/postingService";
+import { Posting } from "../dto/posting";
+import { IGetAuthTokenRequest } from "../middleware/authMiddleware";
+
+export const createPosting = async (req: IGetAuthTokenRequest, res: Response) => {
+    try {
+        if (!req.authId) {
+            res.status(404).send({ message: "User not found" });
+        } else {
+            const posting: Posting = req.body;
+            const result = await addPosting(req.authId, posting);
+            res.status(201).send(result);
+        }
+    } catch (error: any) {
+        res.status(error.code ?? 500).send({ message: error.message });
+    }
+};
+
+export const getSinglePosting = async (req: IGetAuthTokenRequest, res: Response) => {
+    try {
+        if (!req.authId) {
+            res.status(404).send({ message: "User not found" });
+        } else {
+            const postingId = req.params.postingId;
+            const posting = await getPosting(req.authId, postingId);
+            res.status(200).send(posting);
+        }
+    } catch (error: any) {
+        res.status(error.code ?? 500).send({ message: error.message });
+    }
+};
+
+export const getAllPostings = async (req: IGetAuthTokenRequest, res: Response) => {
+    try {
+        if (!req.authId) {
+            res.status(404).send({ message: "User not found" });
+        } else {
+            const postings = await getPostings(req.authId);
+            res.status(200).send(postings);
+        }
+    } catch (error: any) {
+        res.status(error.code ?? 500).send({ message: error.message });
+    }
+};
+
+export const updatePostingById = async (req: IGetAuthTokenRequest, res: Response) => {
+    try {
+        if (!req.authId) {
+            res.status(404).send({ message: "User not found" });
+        } else {
+            const postingId = req.params.postingId;
+            const posting: Posting = req.body;
+            const result = await updatePosting(req.authId, postingId, posting);
+            res.status(200).send(result);
+        }
+    } catch (error: any) {
+        res.status(error.code ?? 500).send({ message: error.message });
+    }
+};
+
+export const deletePostingById = async (req: IGetAuthTokenRequest, res: Response) => {
+    try {
+        if (!req.authId) {
+            res.status(404).send({ message: "User not found" });
+        } else {
+            const postingId = req.params.postingId;
+            const result = await deletePosting(req.authId, postingId);
+            res.status(200).send(result);
+        }
+    } catch (error: any) {
+        res.status(error.code ?? 500).send({ message: error.message });
+    }
+};
