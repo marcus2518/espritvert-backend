@@ -24,7 +24,7 @@ const swaggerOptions = {
         description: "Local server",
       },
       {
-        url: "https://espritvert-14157.uc.r.appspot.com/", // TODO real URL
+        url: "https://espritvert-backend-z3g3ptprqa-nn.a.run.app/", // TODO real URL
         description: "Deployed GCLOUD server",
       },
     ],
