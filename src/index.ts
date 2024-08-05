@@ -20,7 +20,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:3000", // TODO real URL
+        url: "http://localhost:8080", // TODO real URL
         description: "Local server",
       },
       {
