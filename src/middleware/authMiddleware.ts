@@ -4,6 +4,7 @@ import { NextFunction, Request, Response } from 'express';
 export interface IGetAuthTokenRequest extends Request {
     authToken?: string | null;
     authId?: string;
+    email?: string;
 }
 
 const getAuthToken = (req: IGetAuthTokenRequest, res: Response, next: NextFunction) => {
@@ -29,9 +30,10 @@ export const checkIfAuthenticated = (
 
             const userInfo = await firebase.auth().verifyIdToken(authToken);
             req.authId = userInfo.uid;
+            req.email = userInfo.email;
             return next();
         } catch (e) {
-            console.error(e)
+            console.error(e);
             return res.status(401).send({ error: 'You are not authorized to make this request' });
         }
     });
@@ -48,6 +50,7 @@ export const checkIfAdmin = (req: IGetAuthTokenRequest, res: Response, next: Nex
             const userInfo = await firebase.auth().verifyIdToken(authToken);
             if (userInfo.admin === true) {
                 req.authId = userInfo.uid;
+                req.email = userInfo.email;
                 return next();
             } else {
                 return res.status(403).send({ error: 'Admin privileges required' });

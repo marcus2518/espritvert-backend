@@ -1,5 +1,5 @@
 import { db_addPosting, db_getPosting, db_getPostings, db_updatePosting, db_deletePosting } from '../data/postings';
-import { PostingDTO } from '../dto/posting';
+import { PostingDTO, PostingWithId } from '../dto/posting';
 
 export const addPosting = async (userId: string, posting: PostingDTO): Promise<{ message: string; postingId: string }> => {
     try {
@@ -22,7 +22,7 @@ export const getPosting = async (userId: string, postingId: string): Promise<Pos
     }
 };
 
-export const getPostings = async (userId: string): Promise<PostingDTO[]> => {
+export const getPostings = async (userId: string): Promise<PostingWithId[]> => {
     try {
         const postings = await db_getPostings(userId);
         return postings;

@@ -3,6 +3,7 @@
 import express from "express";
 import { createPosting, getSinglePosting, getAllPostings, updatePostingById, deletePostingById } from "../controllers/postingController";
 import { checkIfAuthenticated } from '../middleware/authMiddleware';
+import { upload } from '../middleware/uploadMiddleware';
 
 const router = express.Router();
 
@@ -22,10 +23,12 @@ const router = express.Router();
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
+ *               title:
+ *                 type: string
  *               description:
  *                 type: string
  *               price:
@@ -40,14 +43,18 @@ const router = express.Router();
  *                 format: date-time
  *               image:
  *                 type: string
+ *                 format: binary
  *                 nullable: true
+ *               category:
+ *                 type: string
  *             example:
+ *               title: "Tool rental"
  *               description: "Tool rental"
  *               price: "100"
  *               location: "New York"
  *               startDate: "2024-01-01T00:00:00.000Z"
  *               endDate: "2024-01-10T00:00:00.000Z"
- *               image: "http://example.com/image.jpg"
+ *               category: "Tools"
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -58,7 +65,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.post("/", checkIfAuthenticated, createPosting);
+router.post("/", checkIfAuthenticated, upload.single('image'), createPosting);
 
 /**
  * @swagger
@@ -121,10 +128,12 @@ router.get("/", checkIfAuthenticated, getAllPostings);
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
+ *               title:
+ *                 type: string
  *               description:
  *                 type: string
  *               price:
@@ -139,14 +148,18 @@ router.get("/", checkIfAuthenticated, getAllPostings);
  *                 format: date-time
  *               image:
  *                 type: string
+ *                 format: binary
  *                 nullable: true
+ *               category:
+ *                 type: string
  *             example:
+ *               title: "Updated tool rental"
  *               description: "Updated tool rental"
  *               price: "120"
  *               location: "Los Angeles"
  *               startDate: "2024-02-01T00:00:00.000Z"
  *               endDate: "2024-02-10T00:00:00.000Z"
- *               image: "http://example.com/updated-image.jpg"
+ *               category: "Tools"
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -157,7 +170,7 @@ router.get("/", checkIfAuthenticated, getAllPostings);
  *       500:
  *         description: Internal server error
  */
-router.put("/:postingId", checkIfAuthenticated, updatePostingById);
+router.put("/:postingId", checkIfAuthenticated, upload.single('image'), updatePostingById);
 
 /**
  * @swagger

@@ -1,16 +1,10 @@
-// src/data/postings.ts
-
 import { db } from '../config/firebaseAdmin';
-import { PostingDTO } from '../dto/posting';
+import { PostingDTO, PostingWithId } from '../dto/posting';
 import { v4 as uuidv4 } from 'uuid';
 
 const getPostingsCollection = (userId: string) => {
     return db.collection('users').doc(userId).collection('postings');
 };
-
-export interface PostingWithId extends PostingDTO {
-    id: string;
-}
 
 export const db_addPosting = async (userId: string, posting: PostingDTO): Promise<string> => {
     const postingsCollection = getPostingsCollection(userId);

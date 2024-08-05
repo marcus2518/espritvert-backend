@@ -1,4 +1,4 @@
-// userDTO.ts
+// src/dto/userDTO.ts
 
 export interface UserDTO {
     address: string;
@@ -8,4 +8,5 @@ export interface UserDTO {
     prenom: string;
     nom: string;
     dateOfBirth: Date | null;
+    email: string;
 }
