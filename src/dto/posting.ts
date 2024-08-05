@@ -1,4 +1,4 @@
-export interface Posting {
+export interface PostingDTO {
     description: string;
     price: string;
     location: string;

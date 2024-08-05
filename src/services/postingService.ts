@@ -1,7 +1,7 @@
 import { db_addPosting, db_getPosting, db_getPostings, db_updatePosting, db_deletePosting } from '../data/postings';
-import { Posting } from '../dto/posting';
+import { PostingDTO } from '../dto/posting';
 
-export const addPosting = async (userId: string, posting: Posting): Promise<{ message: string; postingId: string }> => {
+export const addPosting = async (userId: string, posting: PostingDTO): Promise<{ message: string; postingId: string }> => {
     try {
         const postingId = await db_addPosting(userId, posting);
         return { message: 'Posting created successfully', postingId };
@@ -10,7 +10,7 @@ export const addPosting = async (userId: string, posting: Posting): Promise<{ me
     }
 };
 
-export const getPosting = async (userId: string, postingId: string): Promise<Posting> => {
+export const getPosting = async (userId: string, postingId: string): Promise<PostingDTO> => {
     try {
         const posting = await db_getPosting(userId, postingId);
         if (!posting) {
@@ -22,7 +22,7 @@ export const getPosting = async (userId: string, postingId: string): Promise<Pos
     }
 };
 
-export const getPostings = async (userId: string): Promise<Posting[]> => {
+export const getPostings = async (userId: string): Promise<PostingDTO[]> => {
     try {
         const postings = await db_getPostings(userId);
         return postings;
@@ -31,7 +31,7 @@ export const getPostings = async (userId: string): Promise<Posting[]> => {
     }
 };
 
-export const updatePosting = async (userId: string, postingId: string, posting: Posting): Promise<{ message: string }> => {
+export const updatePosting = async (userId: string, postingId: string, posting: PostingDTO): Promise<{ message: string }> => {
     try {
         await db_updatePosting(userId, postingId, posting);
         return { message: 'Posting updated successfully' };

@@ -2,7 +2,7 @@
 
 import { Response } from "express";
 import { addPosting, getPosting, getPostings, updatePosting, deletePosting } from "../services/postingService";
-import { Posting } from "../dto/posting";
+import { PostingDTO } from "../dto/posting";
 import { IGetAuthTokenRequest } from "../middleware/authMiddleware";
 
 export const createPosting = async (req: IGetAuthTokenRequest, res: Response) => {
@@ -10,7 +10,7 @@ export const createPosting = async (req: IGetAuthTokenRequest, res: Response) =>
         if (!req.authId) {
             res.status(404).send({ message: "User not found" });
         } else {
-            const posting: Posting = req.body;
+            const posting: PostingDTO = req.body;
             const result = await addPosting(req.authId, posting);
             res.status(201).send(result);
         }
@@ -52,7 +52,7 @@ export const updatePostingById = async (req: IGetAuthTokenRequest, res: Response
             res.status(404).send({ message: "User not found" });
         } else {
             const postingId = req.params.postingId;
-            const posting: Posting = req.body;
+            const posting: PostingDTO = req.body;
             const result = await updatePosting(req.authId, postingId, posting);
             res.status(200).send(result);
         }
