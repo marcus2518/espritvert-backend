@@ -1,5 +1,6 @@
 import express from "express";
 import { getUser, addUser } from "../controllers/userController";
+import { checkIfAuthenticated } from '../middleware/authMiddleware';
 
 const router = express.Router();
 
@@ -23,6 +24,8 @@ const router = express.Router();
  *         schema:
  *           type: string
  *         description: User ID
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Successful response
@@ -33,7 +36,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.get("/:userId", getUser);
+router.get("/:userId", checkIfAuthenticated, getUser);
 
 /**
  * @swagger
@@ -48,6 +51,8 @@ router.get("/:userId", getUser);
  *           schema:
  *             type: object
  *             properties:
+ *               id:
+ *                 type: string
  *               address:
  *                 type: string
  *               city:
@@ -64,6 +69,7 @@ router.get("/:userId", getUser);
  *                 type: string
  *                 format: date-time
  *             example:
+ *               id: "12345"
  *               address: "123 Main St"
  *               city: "New York"
  *               province: "NY"

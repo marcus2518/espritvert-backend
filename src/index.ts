@@ -28,6 +28,20 @@ const swaggerOptions = {
         description: "Deployed GCLOUD server",
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
   apis: ["routes/*.ts", "./routes/*.js", "./dist/routes/*.js"], // Paths to files where Swagger will look for annotations, for now I don't know how to use swagger directly w/ ts
 };
