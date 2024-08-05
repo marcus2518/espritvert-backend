@@ -18,9 +18,9 @@ export const db_getUserById = async (id: string): Promise<UserDTO> => {
   return foundUser;
 };
 
-export const db_createUser = async (user: UserDTO): Promise<{ message: string; userId: string }> => {
+export const db_createUser = async (userId: string, user: UserDTO): Promise<{ message: string; userId: string }> => {
   try {
-    const userRef = db.collection(collectionName).doc();
+    const userRef = db.collection(collectionName).doc(userId);
     await userRef.set(user);
     return { message: "User created successfully", userId: userRef.id };
   } catch (error: any) {

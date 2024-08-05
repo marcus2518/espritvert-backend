@@ -1,7 +1,6 @@
 // userDTO.ts
 
 export interface UserDTO {
-    id: string;
     address: string;
     city: string;
     province: string;

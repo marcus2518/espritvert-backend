@@ -13,17 +13,10 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/users/{userId}:
+ * /api/users/:
  *   get:
- *     summary: Get user by ID
+ *     summary: Gets current user
  *     tags: [Users]
- *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
- *         schema:
- *           type: string
- *         description: User ID
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -36,7 +29,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.get("/:userId", checkIfAuthenticated, getUser);
+router.get("/", checkIfAuthenticated, getUser);
 
 /**
  * @swagger
@@ -51,8 +44,6 @@ router.get("/:userId", checkIfAuthenticated, getUser);
  *           schema:
  *             type: object
  *             properties:
- *               id:
- *                 type: string
  *               address:
  *                 type: string
  *               city:
@@ -68,15 +59,16 @@ router.get("/:userId", checkIfAuthenticated, getUser);
  *               dateOfBirth:
  *                 type: string
  *                 format: date-time
- *             example:
- *               id: "12345"
- *               address: "123 Main St"
- *               city: "New York"
- *               province: "NY"
- *               postalCode: "10001"
- *               prenom: "John"
- *               nom: "Doe"
- *               dateOfBirth: "1990-01-01T00:00:00.000Z"
+ *           security:
+ *             - bearerAuth: []
+ *           example:
+ *             address: "123 Main St"
+ *             city: "New York"
+ *             province: "NY"
+ *             postalCode: "10001"
+ *             prenom: "John"
+ *             nom: "Doe"
+ *             dateOfBirth: "1990-01-01T00:00:00.000Z"
  *     responses:
  *       201:
  *         description: User created successfully
@@ -85,6 +77,6 @@ router.get("/:userId", checkIfAuthenticated, getUser);
  *       500:
  *         description: Internal server error
  */
-router.post("/", addUser);
+router.post("/", checkIfAuthenticated, addUser);
 
 export default router;

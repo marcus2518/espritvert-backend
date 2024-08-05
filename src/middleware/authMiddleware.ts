@@ -31,6 +31,7 @@ export const checkIfAuthenticated = (
             req.authId = userInfo.uid;
             return next();
         } catch (e) {
+            console.error(e)
             return res.status(401).send({ error: 'You are not authorized to make this request' });
         }
     });

@@ -10,9 +10,9 @@ export const getUserById = async (id: string): Promise<UserDTO> => {
   }
 };
 
-export const createUser = async (user: UserDTO): Promise<{ message: string; userId: string }> => {
+export const createUser = async (userId: string, user: UserDTO): Promise<{ message: string; userId: string }> => {
   try {
-    const result = await db_createUser(user);
+    const result = await db_createUser(userId, user);
     return result;
   } catch (error: any) {
     throw new Error(`Unable to create user: ${error.message}`);

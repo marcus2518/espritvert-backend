@@ -1,21 +1,26 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { getUserById, createUser } from "../services/userService";
 import { UserDTO } from "../dto/user";
+import { IGetAuthTokenRequest } from "../middleware/authMiddleware";
 
-export const getUser = async (req: Request, res: Response) => {
+export const getUser = async (req: IGetAuthTokenRequest, res: Response) => {
   try {
-    const user = await getUserById(req.params.userId);
-    res.status(200).send(user);
+    if (!req.authId) { res.status(404).send({ message: "User not found" }) } else {
+      const user = await getUserById(req.authId);
+      res.status(200).send(user);
+    }
   } catch (error: any) {
     res.status(error.code ?? 500).send({ message: error.message });
   }
 };
 
-export const addUser = async (req: Request, res: Response) => {
+export const addUser = async (req: IGetAuthTokenRequest, res: Response) => {
   try {
-    const user: UserDTO = req.body;
-    const result = await createUser(user);
-    res.status(201).send(result);
+    if (!req.authId) { res.status(404).send({ message: "User not found" }) } else {
+      const user: UserDTO = req.body;
+      const result = await createUser(req.authId, user);
+      res.status(201).send(result);
+    }
   } catch (error: any) {
     res.status(error.code ?? 500).send({ message: error.message });
   }
