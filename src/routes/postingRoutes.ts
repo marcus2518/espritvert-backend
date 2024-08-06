@@ -131,6 +131,12 @@ router.get("/", checkIfAuthenticated, getAllPostings);
  *         schema:
  *           type: integer
  *         description: Page number
+ *       - in: query
+ *         name: category
+ *         required: false
+ *         schema:
+ *           type: string
+ *         description: Category filter
  *     security:
  *       - bearerAuth: []
  *     responses:

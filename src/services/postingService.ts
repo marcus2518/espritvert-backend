@@ -49,9 +49,9 @@ export const deletePosting = async (userId: string, postingId: string): Promise<
     }
 };
 
-export const getAllPostingsWithPagination = async (pageSize: number, page: number): Promise<(PostingWithId & { ownerId: string })[]> => {
+export const getAllPostingsWithPagination = async (pageSize: number, page: number, category?: string): Promise<(PostingWithId & { ownerId: string })[]> => {
     try {
-        const postings = await db_getAllPostingsWithPagination(pageSize, page);
+        const postings = await db_getAllPostingsWithPagination(pageSize, page, category);
         return postings;
     } catch (error: any) {
         throw new Error(`Unable to get all postings with pagination: ${error.message}`);

@@ -1,3 +1,5 @@
+// src/data/postings.ts
+
 import { db } from '../config/firebaseAdmin';
 import { PostingDTO, PostingWithId } from '../dto/posting';
 import { v4 as uuidv4 } from 'uuid';
@@ -41,7 +43,7 @@ const getUsersCollection = () => {
     return db.collection('users');
 };
 
-export const db_getAllPostingsWithPagination = async (pageSize: number, page: number): Promise<(PostingWithId & { ownerId: string })[]> => {
+export const db_getAllPostingsWithPagination = async (pageSize: number, page: number, category?: string): Promise<(PostingWithId & { ownerId: string })[]> => {
     const usersSnapshot = await getUsersCollection().get();
     let totalPostings: (PostingWithId & { ownerId: string })[] = [];
 
@@ -52,15 +54,16 @@ export const db_getAllPostingsWithPagination = async (pageSize: number, page: nu
 
         postingsSnapshot.forEach(postingDoc => {
             const postingData = postingDoc.data() as PostingDTO;
-            const postingWithId: PostingWithId & { ownerId: string } = {
-                ...postingData,
-                id: postingDoc.id,
-                ownerId: userId,
-            };
-            totalPostings.push(postingWithId);
+            if (!category || (category && postingData.category === category)) {
+                const postingWithId: PostingWithId & { ownerId: string } = {
+                    ...postingData,
+                    id: postingDoc.id,
+                    ownerId: userId,
+                };
+                totalPostings.push(postingWithId);
+            }
         });
     }
-
 
     totalPostings = totalPostings.sort((a, b) => {
         const dateA = new Date(a.startDate as Date);
