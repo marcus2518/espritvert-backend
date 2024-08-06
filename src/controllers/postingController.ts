@@ -1,5 +1,5 @@
-import { Response } from "express";
-import { addPosting, getPosting, getPostings, updatePosting, deletePosting } from "../services/postingService";
+import { Request, Response } from "express";
+import { addPosting, getPosting, getPostings, updatePosting, deletePosting, getAllPostingsWithPagination } from "../services/postingService";
 import { PostingDTO } from "../dto/posting";
 import { IGetAuthTokenRequest } from "../middleware/authMiddleware";
 import { uploadToGCS } from "../middleware/uploadMiddleware";
@@ -79,6 +79,18 @@ export const deletePostingById = async (req: IGetAuthTokenRequest, res: Response
             const result = await deletePosting(req.authId, postingId);
             res.status(200).send(result);
         }
+    } catch (error: any) {
+        res.status(error.code ?? 500).send({ message: error.message });
+    }
+};
+
+export const getAllPostingsFromAll = async (req: Request, res: Response) => {
+    try {
+        const pageSize = parseInt(req.query.pageSize as string, 10) || 10;
+        const page = parseInt(req.query.page as string, 10) || 1;
+
+        const postings = await getAllPostingsWithPagination(pageSize, page);
+        res.status(200).send(postings);
     } catch (error: any) {
         res.status(error.code ?? 500).send({ message: error.message });
     }

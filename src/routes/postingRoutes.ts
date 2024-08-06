@@ -1,7 +1,7 @@
 // src/routes/postingRoutes.ts
 
-import express from "express";
-import { createPosting, getSinglePosting, getAllPostings, updatePostingById, deletePostingById } from "../controllers/postingController";
+import express from 'express';
+import { createPosting, getSinglePosting, getAllPostingsFromAll, updatePostingById, deletePostingById, getAllPostings } from '../controllers/postingController';
 import { checkIfAuthenticated } from '../middleware/authMiddleware';
 import { upload } from '../middleware/uploadMiddleware';
 
@@ -69,7 +69,7 @@ router.post("/", checkIfAuthenticated, upload.single('image'), createPosting);
 
 /**
  * @swagger
- * /api/postings/{postingId}:
+ * /api/postings/posting/{postingId}:
  *   get:
  *     summary: Get a posting by ID
  *     tags: [Postings]
@@ -92,7 +92,7 @@ router.post("/", checkIfAuthenticated, upload.single('image'), createPosting);
  *       500:
  *         description: Internal server error
  */
-router.get("/:postingId", checkIfAuthenticated, getSinglePosting);
+router.get("/posting/:postingId", checkIfAuthenticated, getSinglePosting);
 
 /**
  * @swagger
@@ -111,6 +111,37 @@ router.get("/:postingId", checkIfAuthenticated, getSinglePosting);
  *         description: Internal server error
  */
 router.get("/", checkIfAuthenticated, getAllPostings);
+
+/**
+ * @swagger
+ * /api/postings/allPostings:
+ *   get:
+ *     summary: Get all postings with pagination
+ *     tags: [Postings]
+ *     parameters:
+ *       - in: query
+ *         name: pageSize
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Number of postings per page
+ *       - in: query
+ *         name: page
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Page number
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal server error
+ */
+router.get("/allPostings", checkIfAuthenticated, getAllPostingsFromAll);
 
 /**
  * @swagger

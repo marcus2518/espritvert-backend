@@ -1,4 +1,4 @@
-import { db_addPosting, db_getPosting, db_getPostings, db_updatePosting, db_deletePosting } from '../data/postings';
+import { db_addPosting, db_getPosting, db_getPostings, db_updatePosting, db_deletePosting, db_getAllPostingsWithPagination } from '../data/postings';
 import { PostingDTO, PostingWithId } from '../dto/posting';
 
 export const addPosting = async (userId: string, posting: PostingDTO): Promise<{ message: string; postingId: string }> => {
@@ -46,5 +46,14 @@ export const deletePosting = async (userId: string, postingId: string): Promise<
         return { message: 'Posting deleted successfully' };
     } catch (error: any) {
         throw new Error(`Unable to delete posting: ${error.message}`);
+    }
+};
+
+export const getAllPostingsWithPagination = async (pageSize: number, page: number): Promise<(PostingWithId & { ownerId: string })[]> => {
+    try {
+        const postings = await db_getAllPostingsWithPagination(pageSize, page);
+        return postings;
+    } catch (error: any) {
+        throw new Error(`Unable to get all postings with pagination: ${error.message}`);
     }
 };
