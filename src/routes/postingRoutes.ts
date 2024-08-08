@@ -44,7 +44,7 @@ const router = express.Router();
  *               image:
  *                 type: string
  *                 format: binary
- *                 nullable: true
+ *                 undefinedable: true
  *               category:
  *                 type: string
  *             example:
@@ -186,7 +186,7 @@ router.get("/allPostings", checkIfAuthenticated, getAllPostingsFromAll);
  *               image:
  *                 type: string
  *                 format: binary
- *                 nullable: true
+ *                 undefinedable: true
  *               category:
  *                 type: string
  *             example:

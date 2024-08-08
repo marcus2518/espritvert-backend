@@ -7,6 +7,7 @@ export interface UserDTO {
     postalCode: string;
     prenom: string;
     nom: string;
-    dateOfBirth: Date | null;
+    dateOfBirth: Date | undefined;
     email: string;
+    postings: string[];  // Add postings field
 }

@@ -12,13 +12,16 @@ export const createPosting = async (req: IGetAuthTokenRequest, res: Response) =>
             res.status(404).send({ message: "User not found" });
         } else {
             const { title, description, price, location, startDate, endDate, category } = req.body;
-            let image: string | null = null;
-            if (req.file) {
+            let image: string | undefined = undefined;
+            if (req.file && req.authId) {
                 image = await uploadToGCS(req.file) as string;
+                const posting: PostingDTO = { title, description, price, location, startDate, endDate, image, category, userId: req.authId };
+                const result = await addPosting(posting);
+                res.status(201).send(result);
+            } else {
+                res.status(500).send("Error while creating posting");
             }
-            const posting: PostingDTO = { title, description, price, location, startDate, endDate, image, category };
-            const result = await addPosting(req.authId, posting);
-            res.status(201).send(result);
+
         }
     } catch (error: any) {
         res.status(error.code ?? 500).send({ message: error.message });
@@ -27,13 +30,9 @@ export const createPosting = async (req: IGetAuthTokenRequest, res: Response) =>
 
 export const getSinglePosting = async (req: IGetAuthTokenRequest, res: Response) => {
     try {
-        if (!req.authId) {
-            res.status(404).send({ message: "User not found" });
-        } else {
-            const postingId = req.params.postingId;
-            const posting = await getPosting(req.authId, postingId);
-            res.status(200).send(posting);
-        }
+        const postingId = req.params.postingId;
+        const posting = await getPosting(postingId);
+        res.status(200).send(posting);
     } catch (error: any) {
         res.status(error.code ?? 500).send({ message: error.message });
     }
@@ -54,19 +53,18 @@ export const getAllPostings = async (req: IGetAuthTokenRequest, res: Response) =
 
 export const updatePostingById = async (req: IGetAuthTokenRequest, res: Response) => {
     try {
-        if (!req.authId) {
-            res.status(404).send({ message: "User not found" });
-        } else {
-            const postingId = req.params.postingId;
-            const { title, description, price, location, startDate, endDate, category } = req.body;
-            let image: string | null = null;
-            if (req.file) {
-                image = await uploadToGCS(req.file) as string;
-            }
-            const posting: PostingDTO = { title, description, price, location, startDate, endDate, image, category };
-            const result = await updatePosting(req.authId, postingId, posting);
+        const postingId = req.params.postingId;
+        const { title, description, price, location, startDate, endDate, category } = req.body;
+        let image: string | undefined = undefined;
+        if (req.file && req.authId) {
+            image = await uploadToGCS(req.file) as string;
+            const posting: PostingDTO = { title, description, price, location, startDate, endDate, image, category, userId: req.authId };
+            const result = await updatePosting(postingId, posting);
             res.status(200).send(result);
+        } else {
+            res.status(500).send("Error while updating posting");
         }
+
     } catch (error: any) {
         res.status(error.code ?? 500).send({ message: error.message });
     }
@@ -74,11 +72,9 @@ export const updatePostingById = async (req: IGetAuthTokenRequest, res: Response
 
 export const deletePostingById = async (req: IGetAuthTokenRequest, res: Response) => {
     try {
-        if (!req.authId) {
-            res.status(404).send({ message: "User not found" });
-        } else {
+        if (req.authId) {
             const postingId = req.params.postingId;
-            const result = await deletePosting(req.authId, postingId);
+            const result = await deletePosting(postingId, req.authId);
             res.status(200).send(result);
         }
     } catch (error: any) {

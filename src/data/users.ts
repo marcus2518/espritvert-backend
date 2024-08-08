@@ -1,3 +1,5 @@
+// src/data/users.ts
+
 import { db } from "../config/firebaseAdmin";
 import { UserDTO } from "../dto/user";
 import HttpError from "../utils/httpError";
@@ -21,7 +23,7 @@ export const db_getUserById = async (id: string): Promise<UserDTO> => {
 export const db_createUser = async (userId: string, user: UserDTO): Promise<{ message: string; userId: string }> => {
   try {
     const userRef = db.collection(collectionName).doc(userId);
-    await userRef.set(user);
+    await userRef.set({ ...user, postings: [] }); // Initialize postings array
     return { message: "User created successfully", userId: userRef.id };
   } catch (error: any) {
     throw new HttpError(`[DATA] Error creating user: ${error.message}`, 500);

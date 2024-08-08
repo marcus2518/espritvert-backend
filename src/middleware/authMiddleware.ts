@@ -2,7 +2,7 @@ import * as firebase from 'firebase-admin';
 import { NextFunction, Request, Response } from 'express';
 
 export interface IGetAuthTokenRequest extends Request {
-    authToken?: string | null;
+    authToken?: string | undefined;
     authId?: string;
     email?: string;
 }
@@ -11,7 +11,7 @@ const getAuthToken = (req: IGetAuthTokenRequest, res: Response, next: NextFuncti
     if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
         req.authToken = req.headers.authorization.split(' ')[1];
     } else {
-        req.authToken = null;
+        req.authToken = undefined;
     }
     next();
 };

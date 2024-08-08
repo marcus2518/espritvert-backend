@@ -1,5 +1,3 @@
-// src/controllers/userController.ts
-
 import { Response } from "express";
 import { getUserById, createUser } from "../services/userService";
 import { UserDTO } from "../dto/user";
@@ -23,7 +21,7 @@ export const addUser = async (req: IGetAuthTokenRequest, res: Response) => {
     if (!req.authId) {
       res.status(404).send({ message: "User not found" });
     } else {
-      const user: UserDTO = { ...req.body, email: req.email };
+      const user: UserDTO = { ...req.body, email: req.email, postings: [] };
       const result = await createUser(req.authId, user);
       res.status(201).send(result);
     }

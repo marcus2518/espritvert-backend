@@ -5,10 +5,11 @@ export interface PostingDTO {
     description: string;
     price: string;
     location: string;
-    startDate: Date | null;
-    endDate: Date | null;
-    image: string | null;
+    startDate: Date
+    endDate: Date
+    image: string
     category: string;
+    userId: string
 }
 
 export interface PostingWithId extends PostingDTO {
