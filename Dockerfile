@@ -1,6 +1,6 @@
 # Use the official Node.js image as the base image
 FROM node:20
-
+ENV HOST 0.0.0.0
 # Set the working directory
 WORKDIR /app
 
