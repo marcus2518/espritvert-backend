@@ -10,7 +10,7 @@ export const createRental = async (postingId: string, renteeId: string): Promise
 
         const posting: PostingDTO | undefined = await db_getPosting(postingId);
         if (posting?.userId === renteeId) {
-            return { message: 'Cannot rent items to yourself' };
+            throw new Error('Cannot rent items to yourself');
         }
         if (posting) {
             await db_deletePosting(postingId, posting?.userId);
@@ -26,7 +26,7 @@ export const createRental = async (postingId: string, renteeId: string): Promise
             const rentalId = await db_addRental(rental);
             return { message: 'Rental created successfully', rentalId };
         }
-        return { message: 'Rental not found' };
+        throw new Error('Rental not found')
     } catch (error: any) {
         throw new Error(`Unable to create rental: ${error.message}`);
     }
