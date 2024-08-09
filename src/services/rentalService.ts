@@ -7,10 +7,11 @@ import { PostingDTO } from '../dto/posting';
 
 export const createRental = async (postingId: string, renteeId: string): Promise<{ message: string; rentalId?: string }> => {
     try {
-        if (postingId === renteeId) {
+
+        const posting: PostingDTO | undefined = await db_getPosting(postingId);
+        if (posting?.userId === renteeId) {
             return { message: 'Cannot rent items to yourself' };
         }
-        const posting: PostingDTO | undefined = await db_getPosting(postingId);
         if (posting) {
             await db_deletePosting(postingId, posting?.userId);
             const rental: RentalDTO = {
