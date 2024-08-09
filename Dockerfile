@@ -17,11 +17,6 @@ COPY . .
 RUN tsc
 
 
-
-# Expose the port the app runs on
-# Expose port 80
-ENV PORT 8080
-ENV HOST 0.0.0.0
 EXPOSE 8080
 
 # Command to run the app
