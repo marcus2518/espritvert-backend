@@ -1,7 +1,7 @@
 // src/controllers/rentalController.ts
 
 import { Response } from 'express';
-import { createRental } from '../services/rentalService';
+import { createRental, getUserRentals } from '../services/rentalService';
 import { IGetAuthTokenRequest } from '../middleware/authMiddleware';
 
 export const rentItem = async (req: IGetAuthTokenRequest, res: Response) => {
@@ -16,7 +16,19 @@ export const rentItem = async (req: IGetAuthTokenRequest, res: Response) => {
             } else {
                 res.status(401).send("Unauthorized");
             }
+        }
+    } catch (error: any) {
+        res.status(error.code ?? 500).send({ message: error.message });
+    }
+};
 
+export const getRentals = async (req: IGetAuthTokenRequest, res: Response) => {
+    try {
+        if (!req.authId) {
+            res.status(404).send({ message: 'User not found' });
+        } else {
+            const rentals = await getUserRentals(req.authId);
+            res.status(200).send(rentals);
         }
     } catch (error: any) {
         res.status(error.code ?? 500).send({ message: error.message });

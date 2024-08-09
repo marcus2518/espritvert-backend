@@ -5,4 +5,5 @@ export interface RentalDTO {
     description: string;
     price: string;
     rentalDate: Date;
+    image: string;
 }
