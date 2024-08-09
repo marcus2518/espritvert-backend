@@ -9,5 +9,6 @@ export interface UserDTO {
     nom: string;
     dateOfBirth: Date | undefined;
     email: string;
-    postings: string[];  // Add postings field
+    postings: string[];
+    rentals: string[];
 }

@@ -1,17 +1,13 @@
 import express from "express";
 import userRouter from "./userRoutes";
 import postingRouter from "./postingRoutes";
+import rentalRouter from "./rentalRoutes";
 
 const router = express.Router();
 
-/**
- * @swagger
- * tags:
- *   name: Users
- *   description: User management
- */
-
 router.use("/users", userRouter);
+
 router.use("/postings", postingRouter)
 
+router.use('/rentals', rentalRouter);
 export default router;
