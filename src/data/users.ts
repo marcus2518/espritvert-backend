@@ -16,7 +16,7 @@ export const db_getUserById = async (id: string): Promise<UserDTO> => {
       404
     );
   }
-
+  //allo
   return foundUser;
 };
 
